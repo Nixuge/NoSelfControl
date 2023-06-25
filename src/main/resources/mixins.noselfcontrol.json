@@ -1,0 +1,10 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "package": "me.nixuge.noselfcontrol.mixins",
+  "refmap": "refmap.noselfcontrol.json",
+  "mixins": [],
+  "client": [
+    "<set your mixins here, under the mixins/ folder>"
+  ],
+  "server": []
+}
