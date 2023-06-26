@@ -32,6 +32,10 @@ public class ChatChecker {
      * @return message valid or not
      */
     public static boolean validateMessage(String msg) {
+        // Command check
+        if (msg.startsWith("/"))
+            return true;
+
         // Global checks
         if (config.isEnabledAllServers() && !mc.isIntegratedServerRunning()) {
             return isMessageValid(msg);

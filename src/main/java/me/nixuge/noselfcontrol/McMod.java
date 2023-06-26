@@ -4,7 +4,9 @@ import java.io.File;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.nixuge.noselfcontrol.command.commands.SendChatMsgCmd;
 import me.nixuge.noselfcontrol.config.ConfigCache;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -47,5 +49,7 @@ public class McMod {
     @Mod.EventHandler
     public void init(final FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this.configCache);
+
+        ClientCommandHandler.instance.registerCommand(new SendChatMsgCmd());
     }
 }

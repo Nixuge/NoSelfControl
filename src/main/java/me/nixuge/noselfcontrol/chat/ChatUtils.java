@@ -37,14 +37,12 @@ public class ChatUtils {
 
 
     public static void sendChatMessagePassthrough(String msg, boolean addToChat) {
-        System.out.println("Bypassing function called !");
-        System.out.println(msg);
-        // if (addToChat) {
-        //     mc.ingameGUI.getChatGUI().addToSentMessages(msg);
-        // }
-        // if (net.minecraftforge.client.ClientCommandHandler.instance.executeCommand(mc.thePlayer, msg) != 0)
-        //     return;
+        if (addToChat)
+            mc.ingameGUI.getChatGUI().addToSentMessages(msg);
+        
+        if (net.minecraftforge.client.ClientCommandHandler.instance.executeCommand(mc.thePlayer, msg) != 0)
+            return;
 
-        // mc.thePlayer.sendChatMessage(msg);
+        mc.thePlayer.sendChatMessage(msg);
     }
 }

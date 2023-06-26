@@ -22,7 +22,8 @@ public class SendChatMsgCmd extends AbstractCommand {
 
     @Override
     public void onCommand(final ICommandSender sender, final String[] args) {
-        System.out.println(args);
-        ChatUtils.sendChatMessagePassthrough("owo", true);
+        // Note: always setting "addToChat" to true as from what i've seen
+        // it's only set to True for non-command sent messages
+        ChatUtils.sendChatMessagePassthrough(String.join(" ", args), true);
     }
 }
