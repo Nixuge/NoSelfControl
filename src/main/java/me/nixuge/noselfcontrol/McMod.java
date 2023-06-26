@@ -4,8 +4,7 @@ import java.io.File;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.nixuge.noselfcontrol.config.Config;
-import net.minecraftforge.client.ClientCommandHandler;
+import me.nixuge.noselfcontrol.config.ConfigCache;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -34,16 +33,19 @@ public class McMod {
     private Configuration configuration;
     @Getter
     private String configDirectory;
+    @Getter
+    private ConfigCache configCache;
     
     @Mod.EventHandler
     public void preInit(final FMLPreInitializationEvent event) {
         this.configDirectory = event.getModConfigurationDirectory().toString();
         final File path = new File(this.configDirectory + File.separator + McMod.MOD_ID + ".cfg");
         this.configuration = new Configuration(path);
+        this.configCache = new ConfigCache(this.configuration);
     }
 
     @Mod.EventHandler
     public void init(final FMLInitializationEvent event) {
-        MinecraftForge.EVENT_BUS.register(new Config(this.configuration));
+        MinecraftForge.EVENT_BUS.register(this.configCache);
     }
 }

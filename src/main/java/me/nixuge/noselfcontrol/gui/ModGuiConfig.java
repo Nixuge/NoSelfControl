@@ -14,7 +14,7 @@ public class ModGuiConfig extends GuiConfig {
                 McMod.MOD_ID,
                 false,
                 false,
-                McMod.NAME + "Configuration"
+                McMod.NAME + " Configuration"
         );
     }
 }
