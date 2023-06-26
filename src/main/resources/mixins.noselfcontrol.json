@@ -4,7 +4,7 @@
   "refmap": "refmap.noselfcontrol.json",
   "mixins": [],
   "client": [
-    "<set your mixins here, under the mixins/ folder>"
+    "gui.GuiScreenMixin"
   ],
   "server": []
 }
