@@ -16,10 +16,10 @@ public class ChatUtils {
     public static void printChat(String text) {
         printChat(new ChatComponentText(text));
     }
+    
     public static void printChat(IChatComponent chatComponent) {
         mc.ingameGUI.getChatGUI().printChatMessage(chatComponent);
     }
-
     
     public static void displayPreventChatMessage(String msg) {
         if (!config.isShowMessageInChat()) 

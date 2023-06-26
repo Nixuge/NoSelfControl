@@ -1,5 +1,7 @@
 package me.nixuge.noselfcontrol.config;
 
+import java.util.regex.Pattern;
+
 import lombok.Getter;
 import me.nixuge.noselfcontrol.McMod;
 import net.minecraftforge.common.config.Configuration;
@@ -26,8 +28,9 @@ public class ConfigCache {
     private boolean enabledAllServers;
     private boolean enabledServerList;
     private String[] serverList;
-    private String[] slursWords;
-    private String[] slursRegex;
+    private String[] slurWords;
+    private String[] slurRegexes;
+    private Pattern[] slurPatterns;
     private boolean showMessageInChat;
     private boolean bypassClick;
 
@@ -38,6 +41,7 @@ public class ConfigCache {
     }
 
     public void loadConfiguration() {
+        // Enable
         this.enabledAllServers = this.configuration.getBoolean(
                 "Enable (all servers)",
                 "General",
@@ -51,7 +55,7 @@ public class ConfigCache {
                 "If you want the mod to be active in solo worlds."
         );
         this.enabledServerList = this.configuration.getBoolean(
-                "Enabled (server list)",
+                "Enable (server list)",
                 "General",
                 true,
                 "If you want the mod to be active in the server list you completed below."
@@ -63,6 +67,7 @@ public class ConfigCache {
                 "Servers where the mod takes effect. Only useful if \"Enabled (srver list)\" is on."
         );
 
+        // Chat
         this.showMessageInChat = this.configuration.getBoolean(
                 "Show a preventing message",
                 "General",
@@ -76,19 +81,24 @@ public class ConfigCache {
                 "If you want a clickable message that lets you send the message anyways. Requires \"Show a preventing message\" to be on."
         );
 
-        this.slursWords = this.configuration.getStringList(
+        // Word lists
+        this.slurWords = this.configuration.getStringList(
                 "Word blacklist (normal)",
                 "General",
                 defaultBlacklistWords,
                 "Simple words blacklist. Messages will be checked to see if they contain in those words."
         );
-        // NOT FUNCTIONAL YET
-        this.slursRegex = this.configuration.getStringList(
+        this.slurRegexes = this.configuration.getStringList(
                 "Word blacklist (regex)",
                 "General",
                 new String[]{},
                 "Regex blacklist. Messages will be matched with those regexes, and prevented if matching."
         );
+        // Todo: Error checking? Doesn't seem to be erroring out anyways, idk how patterns work
+        this.slurPatterns = new Pattern[slurRegexes.length];
+        for (int i = 0; i < slurRegexes.length; i++) {
+            this.slurPatterns[i] = Pattern.compile(slurRegexes[i], Pattern.CASE_INSENSITIVE);
+        }
     }
 
     @SubscribeEvent

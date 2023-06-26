@@ -1,5 +1,7 @@
 package me.nixuge.noselfcontrol.chat;
 
+import java.util.regex.Pattern;
+
 import me.nixuge.noselfcontrol.McMod;
 import me.nixuge.noselfcontrol.config.ConfigCache;
 import net.minecraft.client.Minecraft;
@@ -16,11 +18,20 @@ public class ChatChecker {
      * @return message valid or not
      */
     public static boolean isMessageValid(String msg) {
-        for (String word : config.getSlursWords()) {
-            if (msg.contains(word))
+        msg = msg.toLowerCase();
+        // Normal words
+        for (String word : config.getSlurWords()) {
+            if (msg.contains(word.toLowerCase()))
                 return false;
         }
-        // TODO: REGEX SUPPORT HERE
+        // Regexes
+        for (Pattern pattern : config.getSlurPatterns()) {
+            System.out.println("tried to match regex");
+            if (pattern.matcher(msg).find()) {
+                return false;
+            }
+        }
+        // No match = safe
         return true;
     }
 
