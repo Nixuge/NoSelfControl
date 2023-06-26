@@ -44,13 +44,15 @@ public class ChatChecker {
         }
 
         // Server specific checks
-        ServerData sd = mc.getCurrentServerData();
-        if (sd == null)
-            return true; // Should only happen in solo and not be needed, but just in case
-        String ip = sd.serverIP;
-        for (String server : config.getEnabledServers()) {
-            if (ip.contains(server))
-                return isMessageValid(msg);
+        if (config.isEnabledServerList()) {
+            ServerData sd = mc.getCurrentServerData();
+            if (sd == null)
+                return true; // Should only happen in solo and not be needed, but just in case
+            String ip = sd.serverIP;
+            for (String server : config.getServerList()) {
+                if (ip.contains(server))
+                    return isMessageValid(msg);
+            }
         }
 
         // Otherwise if nothing enabled/no servers matched true

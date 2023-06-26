@@ -22,13 +22,14 @@ public class ConfigCache {
         "nigger"
     };
 
+    private boolean enabledSolo;
     private boolean enabledAllServers;
-    private String[] enabledServers;
+    private boolean enabledServerList;
+    private String[] serverList;
     private String[] slursWords;
     private String[] slursRegex;
     private boolean showMessageInChat;
     private boolean bypassClick;
-    private boolean enabledSolo;
 
     public ConfigCache(final Configuration configuration) {
         this.configuration = configuration;
@@ -38,48 +39,55 @@ public class ConfigCache {
 
     public void loadConfiguration() {
         this.enabledAllServers = this.configuration.getBoolean(
-                "Enable on all servers",
+                "Enable (all servers)",
                 "General",
                 true,
                 "If the mod should be enabled on all servers, regardless of the \"Enabled servers\" option."
         );
-        this.enabledServers = this.configuration.getStringList(
-                "Enabled servers",
+        this.enabledSolo = this.configuration.getBoolean(
+                "Enable (local)",
+                "General",
+                false,
+                "If you want the mod to be active in solo worlds."
+        );
+        this.enabledServerList = this.configuration.getBoolean(
+                "Enabled (server list)",
+                "General",
+                true,
+                "If you want the mod to be active in the server list you completed below."
+        );
+        this.serverList = this.configuration.getStringList(
+                "Server List",
                 "General",
                 defaultEnabledServers,
-                "Servers where the mod takes effect. No usage if \"Enable on all servers\" is on."
+                "Servers where the mod takes effect. Only useful if \"Enabled (srver list)\" is on."
         );
+
+        this.showMessageInChat = this.configuration.getBoolean(
+                "Show a preventing message",
+                "General",
+                true,
+                "If a message should be shown saying your message wasn't sent."
+        );
+        this.bypassClick = this.configuration.getBoolean(
+                "Show a bypass button",
+                "General",
+                false,
+                "If you want a clickable message that lets you send the message anyways. Requires \"Show a preventing message\" to be on."
+        );
+
         this.slursWords = this.configuration.getStringList(
-                "Words blacklist (normal)",
+                "Word blacklist (normal)",
                 "General",
                 defaultBlacklistWords,
                 "Simple words blacklist. Messages will be checked to see if they contain in those words."
         );
         // NOT FUNCTIONAL YET
         this.slursRegex = this.configuration.getStringList(
-                "Words blacklist (regex)",
+                "Word blacklist (regex)",
                 "General",
                 new String[]{},
                 "Regex blacklist. Messages will be matched with those regexes, and prevented if matching."
-        );
-        this.showMessageInChat = this.configuration.getBoolean(
-                "Show preventing message in chat",
-                "General",
-                true,
-                "If a message should be shown saying your message wasn't sent."
-        );
-        // NOT WORKING FOR NOW
-        this.bypassClick = this.configuration.getBoolean(
-                "Bypass button on preventing message",
-                "General",
-                false,
-                "If you want a clickable message that lets you send the message anyways."
-        );
-        this.enabledSolo = this.configuration.getBoolean(
-                "Enabled in solo",
-                "General",
-                false,
-                "If you want the mod to be active in solo worlds."
         );
     }
 
