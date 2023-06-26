@@ -26,7 +26,6 @@ public class ChatChecker {
         }
         // Regexes
         for (Pattern pattern : config.getSlurPatterns()) {
-            System.out.println("tried to match regex");
             if (pattern.matcher(msg).find()) {
                 return false;
             }
